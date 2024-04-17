@@ -1,38 +1,59 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DropdownCheckboxButton from "../components/Dropdown/Dropdown";
 import DropdownbrandCheckboxButton from "../components/Dropdown/Dropdownbrand";
 import DropdownpriceCheckboxButton from "../components/Dropdown/Dropdownprice";
 import ProductCard from "../components/productCard/ProductCard";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { StateContext } from "../App";
+
 
 function ProductListing() {
+  const {globalState,  setGlobalState} = useContext(StateContext)
+  let {menu} = globalState
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [localState, setLocalState] = useState({
     searchResult: [],
     selectedSortOptions: [],
   });
+  const [filterState, setFilterState] = useState({
+    filterResult: [],
+    selectedFilterOptions: [],
+  });
   let search = queryParams.get("search");
   let brand = queryParams.get("brand");
+  let category = queryParams.get("category");
   let subCategory = queryParams.get("subCategory");
   let { searchResult, selectedSortOptions } = localState;
+  let { filterResult, selectedFilterOptions } = filterState;
+  let filterOptions = menu?.map((item,index)=>{
+    
+    return {
+       label: item,
+       value: item
+    }
+  }) 
+  
+
   useEffect(() => {
     axios({
       method: "GET",
-      url: `https://academics.newtonschool.co/api/v1/ecommerce/electronics/products?search={"brand":"${brand}", "name": "${search}"}`,
+      url: `https://academics.newtonschool.co/api/v1/ecommerce/electronics/products?search={"brand":"${brand}", "name": "${search}", "category":"${category}"}`,
       headers: {
         projectID: "f104bi07c490",
       },
     })
       .then((res) => {
-        setLocalState((s) => ({ ...s, searchResult: res.data.data }));
+        setLocalState((s) => ({ ...s, searchResult: res.data.data, filterResult: res.data.data }));
       })
       .catch((e) => {
         console.error(e);
       });
   }, [brand, search]);
 
+
+  
   const handleChange = (obj) => {
     if (selectedSortOptions.some((item) => item.value === obj.value)) {
       setLocalState((s) => ({
@@ -48,6 +69,41 @@ function ProductListing() {
       selectedSortOptions: [...s.selectedSortOptions, obj],
     }));
   };
+  
+
+
+useEffect(() => {
+    axios({
+      method: "GET",
+      url: `https://academics.newtonschool.co/api/v1/ecommerce/electronics/products?search={"brand":"${brand}","category":"${category}"}`,
+      headers: {
+        projectID: "f104bi07c490",
+      },
+    })
+      .then((res) => {
+        setFilterState((s) => ({ ...s, filterResult: res.data.data }));
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, [brand, category]);
+
+
+  const handleFilter = (obj)=>{
+      if(selectedFilterOptions.some((item) => item.value === obj.value)) {
+        setFilterState((s) => ({
+          ...s,selectedFilterOptions: s.selectedFilterOptions.filter(
+            (x) => x.value !== obj.value
+          ),
+        }));
+        return;
+      }
+      setFilterState((s) => ({
+        ...s,
+        selectedFilterOptions: [...s.selectedFilterOptions, obj],
+      }));
+  };
+console.log(selectedFilterOptions)
   return (
     <>
       <div className="w-[calc(100%-2rem)] max-w-[80rem] mx-[auto]">
@@ -56,9 +112,11 @@ function ProductListing() {
         </h1>
         <div className="flex pt-[26px] gap-[7px] justify-between">
           <div className="flex gap-[7px]">
-            <DropdownCheckboxButton />
-            <DropdownbrandCheckboxButton />
-            <DropdownpriceCheckboxButton />
+            <DropdownCheckboxButton 
+            options={filterOptions}
+            onChange={handleFilter}
+
+            />
           </div>
           <div>
             <DropdownCheckboxButton

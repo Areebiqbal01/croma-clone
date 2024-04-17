@@ -4,11 +4,14 @@ import { MdFavoriteBorder } from "react-icons/md";
 
 const ProductCard = (props) => {
   let { name, displayImage, price, ratings } = props;
+  
+  if(ratings) ratings=Math.round(ratings)
+
   return (
     <div className="w-full max-w-sm bg-[#393939] rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <div className="w-[30px] ml-[300px] bg-black rounded-xl">
+      {/* <div className="w-[30px] ml-[300px] bg-black rounded-xl">
         <MdFavoriteBorder className="text-[white] text-[30px] font-lighter " />
-      </div>
+      </div> */}
       <a href="#">
         <img
           className="p-8 rounded-t-lg"
@@ -17,14 +20,17 @@ const ProductCard = (props) => {
         />
       </a>
 
-      <div className="px-5 pb-5 bg-black">
+      <div className="px-5 pb-5 bg-[#191919]">
         <a href="#">
-          <h5 className="text-xl font-semibold tracking-tight text-white dark:text-white">
+          <h5 className="text-xl font-semibold tracking-tight text-white dark:text-white pt-[27px] overflow-hidden ">
             {name}
           </h5>
         </a>
-        <div className="flex items-center mt-2.5 mb-5">
-          <div className="flex items-center space-x-1 rtl:space-x-reverse">
+        <div className="flex items-center mt-2.5 mb-5 pt-[10px]">
+        <span className=" text-[#12daa8] text-xs font-semibold px-2.5 py-0.5  ms-3 ml-[-9px] text-[16px]">
+            {ratings}
+          </span>
+          <div className="flex items-center space-x-1 rtl:space-x-reverse ml-[-6px]">
             <svg
               className="w-4 h-4 text-[#12daa8]"
               aria-hidden="true"
@@ -36,18 +42,18 @@ const ProductCard = (props) => {
             </svg>
             {/* Repeat the star rating SVGs */}
           </div>
-          <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-            {ratings}
-          </span>
+          
         </div>
         <div className="flex items-center">
           <span className="text-3xl font-bold text-white dark:text-white">
             ₹{price}
           </span>
-          <delete className="font-semibold text-m line-through text-white ml-[16px]">
+          </div>
+          <div className='flex items-center'>
+          <delete className="font-semibold text-m line-through text-white ml-[1px] mt-[10px]">
             ₹99999
           </delete>
-        </div>
+          </div>
         <div className="flex text-[white] py-[23px]">
           <CiDeliveryTruck className="text-[26px] gap-3 mr-[5px] " />
           <span className="text-[15px] py-[4px]">

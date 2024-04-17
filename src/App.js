@@ -6,8 +6,10 @@ import { createContext, useState } from "react";
 
 export const StateContext = createContext();
 
+
 function App() {
   const [globalState, setGlobalState] = useState({
+    menu: [],
     searchText: "",
     brandField: null,
     subCategoryField: null,
@@ -16,7 +18,7 @@ function App() {
     <>
       <StateContext.Provider value={{ globalState, setGlobalState }}>
         <Header />
-        <main className="bg-backgroundColor">
+        <main className="bg-[#191919]">
           <Outlet />
           <SliderAuto />
         </main>
