@@ -4,8 +4,9 @@ import Home from '../../page/Home'
 import Cart from '../cart'
 import App from '../../App'
 import ProductListing from '../../page/ProductListing'
-
-
+import DetailsProduct from '../../page/DetailsProduct'
+import LoginForm from '../Login/LoginForm'
+import CreateAccountForm from '../Login/CreateAccountForm'
 
 const router = createBrowserRouter([{
     path: "/" ,
@@ -23,8 +24,20 @@ const router = createBrowserRouter([{
         path: "/listing",
         element: <ProductListing></ProductListing>
        },  
+       {
+        path: "/details",
+        element: <DetailsProduct></DetailsProduct>
+       },  
+       {
+        path: "/loginform",
+        element: <LoginForm></LoginForm>
+       },
+       {
+        path: "/createAccount",
+        element: <CreateAccountForm></CreateAccountForm>
+       },
     ]
-
+    
 }])
 
 

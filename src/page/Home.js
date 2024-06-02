@@ -55,20 +55,6 @@ import { DealOfTheDay } from '../data/DealOfTheday.js'
 import axios from 'axios'
 
 const Home = () => {
-     // useEffect(()=>{
-     //      axios({
-     //        method: "GET",
-     //        url:"https://academics.newtonschool.co/api/v1/ecommerce/electronics/categories",
-     //        headers:{
-     //          projectID: "f104bi07c490"
-     //        }
-     //        }).then(res => {
-     //        console.log("res", res)
-     //        })
-     //        .catch(e => {
-     //        console.error(e)
-     //        })
-     //    },[])
      const [state, setState] = useState({
           DealOfTheDayData:[],
           TopTrendingDeal:[]
@@ -93,10 +79,9 @@ const Home = () => {
              setState(s=>({...s, DealOfTheDayData: res[0].data.data, TopTrendingDeal: res[1].data.data}))
              
           }
-          
-               console.log("res", res)
+                    // console.log("res", res)
           })
-
+        
          
         },[])
      
@@ -121,48 +106,39 @@ const Home = () => {
             .catch(e => {
             console.error(e)
             })
+
+            axios({
+               method: "GET",
+               url:'https://academics.newtonschool.co/api/v1/ecommerce/electronics/products?filter={"subCategory":"kitchenappliances"}',
+   
+               headers:{
+                 projectID: "f104bi07c490"
+               }
+               }).then(res => {
+                  setKitchenappliances(res.data.data)
+             //   console.log("des", res)
+               })
+               .catch(e => {
+               console.error(e)
+               })
+
+               axios({
+                    method: "GET",
+                    url:'https://academics.newtonschool.co/api/v1/ecommerce/electronics/products?filter={"subCategory":"tv"}',
+        
+                    headers:{
+                      projectID: "f104bi07c490"
+                    }
+                    }).then(res => {
+                       setTelevisions(res.data.data)
+                  //   console.log("des", res)
+                    })
+                    .catch(e => {
+                    console.error(e)
+                    })
         },[])
 
-        useEffect(()=>{
-
-          axios({
-            method: "GET",
-            url:'https://academics.newtonschool.co/api/v1/ecommerce/electronics/products?filter={"subCategory":"tv"}',
-
-            headers:{
-              projectID: "f104bi07c490"
-            }
-            }).then(res => {
-               setTelevisions(res.data.data)
-            console.log("des", res)
-            })
-            .catch(e => {
-            console.error(e)
-            })
-        },[])
-
-         useEffect(()=>{
-
-          axios({
-            method: "GET",
-            url:'https://academics.newtonschool.co/api/v1/ecommerce/electronics/products?filter={"subCategory":"kitchenappliances"}',
-
-            headers:{
-              projectID: "f104bi07c490"
-            }
-            }).then(res => {
-               setKitchenappliances(res.data.data)
-          //   console.log("des", res)
-            })
-            .catch(e => {
-            console.error(e)
-            })
-        },[])
-
-     
-
-     
-
+   
   
      return (
     <div className='text-white'>

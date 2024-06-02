@@ -1,14 +1,22 @@
 import React from "react";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { MdFavoriteBorder } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = (props) => {
-  let { name, displayImage, price, ratings } = props;
+  let { name, displayImage, price, ratings, id } = props;
   
+  const navigate = useNavigate()
+
   if(ratings) ratings=Math.round(ratings)
 
+  const handleRedirect = () =>{
+   navigate(`/details?id=${id}`)
+
+  } 
+
   return (
-    <div className="w-full max-w-sm bg-[#393939] rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-full max-w-sm bg-[#393939] rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" onClick={handleRedirect}>
       {/* <div className="w-[30px] ml-[300px] bg-black rounded-xl">
         <MdFavoriteBorder className="text-[white] text-[30px] font-lighter " />
       </div> */}

@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import Menu from "./menuDropdown/Menu";
 import axios from "axios";
 import useClickOutside from "../hooks/useClickOutside";
+import Modallogin from "./Login/Modallogin";
+
 
 function Header() {
   const [search, setSearch] = useState("");
@@ -18,6 +20,10 @@ function Header() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSearchFocused, setSearchFocused] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
+  const [showModallogin, setShowModallogin] = useState(false)
+
+  const closeModallogin = () => setShowModallogin(false)
+
   function closeModal() {
     setModalOpen(false);
   }
@@ -82,14 +88,10 @@ function Header() {
                   />
                 )}
               </div>
-              {/* {isModalOpen && (
-                  <Modal closeModal={closeModal}>
-                    <Menu closeModal={closeModal} />
-                  </Modal>
-                )} */}
+             
               <div className="relative">
                 <p className="text-sm">Menu</p>
-                {/* {isModalOpen && <Menu />} */}
+               
                 <Menu show={isModalOpen} />
               </div>
             </div>
@@ -134,9 +136,12 @@ function Header() {
               <p className="whitespace-nowrap text-sm">Mumbai, 400049</p>
               <IoPencil className="text-xs" />
             </div>
+
             <div className="text-2xl">
-              <FaUser />
-            </div>
+              <button onClick={()=>setShowModallogin(true)}><FaUser /></button>
+              {showModallogin && <Modallogin closeModallogin={closeModallogin} />}
+            </div>  
+           
             <div className="text-2xl relative cursor-pointer">
               <Link to="/cart">
                 {" "}

@@ -103,7 +103,7 @@ useEffect(() => {
         selectedFilterOptions: [...s.selectedFilterOptions, obj],
       }));
   };
-console.log(selectedFilterOptions)
+// console.log(selectedFilterOptions)
   return (
     <>
       <div className="w-[calc(100%-2rem)] max-w-[80rem] mx-[auto]">
@@ -113,7 +113,7 @@ console.log(selectedFilterOptions)
         <div className="flex pt-[26px] gap-[7px] justify-between">
           <div className="flex gap-[7px]">
             <DropdownCheckboxButton 
-            options={filterOptions}
+            options={filterOptions }
             onChange={handleFilter}
 
             />
@@ -133,7 +133,8 @@ console.log(selectedFilterOptions)
           {searchResult.map((item) => {
             return (
               <ProductCard
-                key={item.id}
+                id={item._id}
+                key={item._id}
                 name={item.name}
                 price={item.price}
                 displayImage={item.displayImage}
